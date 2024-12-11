@@ -19,7 +19,10 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MessageSignature;
+import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -122,10 +125,10 @@ public class CommandDev  {
 				if (stack == null || stack.isEmpty() || stack.getItem() instanceof BlockArmorItem) 
 					player.setItemSlot(slot, newStack);
 			}
-			player.sendMessage(new TranslatableComponent(ChatFormatting.GREEN+"Spawned set for "+loc.getPath()), UUID.randomUUID());
+			PlayerChatMessage.unsigned(Component.translatable("Spawned set for" +loc.getPath()).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN)));
 		}
 		else {
-			player.sendMessage(new TranslatableComponent(ChatFormatting.RED+"Invalid block"), UUID.randomUUID());
+			PlayerChatMessage.unsigned(Component.translatable("Invalid block").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
 			return 0;
 		}
 		return 1;
